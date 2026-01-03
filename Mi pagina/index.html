@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAXSTORE-PUNO</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "lucide": "https://esm.sh/lucide"
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="logo">
+                    <img src="/518342843_727707963382162_8417683230465453885_n.jpg" alt="MaxStore Puno Logo">
+                    <div class="logo-text">
+                        <span class="main">MaxStore</span>
+                        <span class="sub">PUNO</span>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar laptops, accesorios y más...">
+                    <button class="search-btn"><i data-lucide="search" style="color: white; width: 20px;"></i></button>
+                </div>
+                <button id="admin-toggle-btn" class="icon-btn" title="Iniciar sesión">🔐 Iniciar sesión</button>
+                <button id="cart-btn" class="icon-btn">
+                    <i data-lucide="shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Filter and Sort Section (Top) -->
+        <section class="filters-row">
+            <div class="category-pills">
+                <button class="pill active" data-category="all">Todos</button>
+                <button class="pill" data-category="Laptops">Laptops</button>
+                <button class="pill" data-category="Tablets">Tablets</button>
+                <button class="pill" data-category="Mini PCs">Mini PCs</button>
+                <button class="pill" data-category="Cargadores">Cargadores</button>
+                <button class="pill" data-category="Cables">Cables</button>
+                <button class="pill" data-category="Audífonos">Audífonos</button>
+                <button class="pill" data-category="Parlantes">Parlantes</button>
+                <button class="pill" data-category="Otros">Otros</button>
+            </div>
+            <div class="sort-control">
+                <select id="sort-select">
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="newest" selected>Recién agregados</option>
+                    <option value="alpha-asc">A - Z</option>
+                    <option value="alpha-desc">Z - A</option>
+                </select>
+            </div> 
+        </section>
+
+        <!-- Main Content with Sidebar -->
+        <div class="main-container">
+            <!-- Filter Sidebar (on the left) -->
+            <aside class="filter-sidebar">
+                <div class="filter-header">
+                    <h3>Filtros</h3>
+                    <button id="close-filter-mobile" class="close-filter-btn"><i data-lucide="x"></i></button>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="filter-section">
+                    <h4>Precio</h4>
+                    <div class="price-inputs">
+                        <input type="number" id="price-min" placeholder="Mín" min="0" step="100">
+                        <span>-</span>
+                        <input type="number" id="price-max" placeholder="Máx" min="0" step="100">
+                    </div>
+                    <button id="apply-price-btn" class="apply-filter-btn">Aplicar</button>
+                    <input type="range" id="price-slider" class="price-slider" min="0" max="15000" step="100" value="0">
+                    <div class="slider-labels">
+                        <span id="slider-min-label">S/ 0</span>
+                        <span id="slider-max-label">S/ 15000</span>
+                    </div>
+                </div>
+
+                <!-- Brand Filter -->
+                <div class="filter-section">
+                    <h4>Marca</h4>
+                    <div id="brands-list" class="brands-list">
+                        <!-- Marcas se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </aside>
+
+            <main id="main-content" class="main-content">
+                <!-- Open Filters Button (Mobile) -->
+                <button id="open-filter-mobile" class="open-filter-btn" style="display: none;">🔍 Filtros</button>
+
+                <!-- Product Grid -->
+                <div id="product-grid" class="product-grid">
+                    <!-- Products will be injected here -->
+                </div>
+
+                <!-- Pagination Controls -->
+                <div id="pagination" class="pagination">
+                    <button id="prev-btn" class="pagination-btn">← Anterior</button>
+                    <div id="page-info" class="page-info">Página 1</div>
+                    <button id="next-btn" class="pagination-btn">Siguiente →</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Filter Overlay (Mobile) -->
+        <div id="filter-overlay" class="filter-overlay" style="display: none;"></div>
+
+        <!-- Cart Sidebar (Overlay) -->
+        <div id="cart-overlay" class="overlay">
+            <div class="cart-sidebar">
+                <div class="cart-header">
+                    <h2>Tu Carrito</h2>
+                    <button id="close-cart" class="icon-btn"><i data-lucide="x"></i></button>
+                </div>
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be injected here -->
+                </div>
+                <div class="cart-footer">
+                    <button id="close-cart-mobile" class="close-cart-mobile-btn" style="display: none;"><i data-lucide="arrow-left"></i> Volver</button>
+                    <div class="total-row">
+                        <span>Productos (<span id="total-items">0</span>):</span>
+                        <span id="cart-total">S/ 0.00</span>
+                    </div>
+                    <button class="checkout-btn">Finalizar Compra</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details Modal -->
+        <div id="detail-modal" class="overlay">
+            <div class="modal-content">
+                <button id="close-modal" class="close-modal"><i data-lucide="arrow-left"></i></button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <!-- Payment Methods Modal -->
+        <div id="payment-modal" class="overlay">
+            <div class="payment-modal-content">
+                <div class="payment-modal-header">
+                    <h2>Selecciona tu Forma de Pago</h2>
+                    <button id="close-payment-modal" class="close-modal"><i data-lucide="x"></i></button>
+                </div>
+                <div class="payment-modal-body">
+                    <div class="payment-method" id="transfer-payment">
+                        <div class="payment-icon">🏦</div>
+                        <div class="payment-info">
+                            <h3>Transferencia Bancaria</h3>
+                            <p>Realiza una transferencia a nuestra cuenta bancaria</p>
+                        </div>
+                        <button class="payment-btn">Seleccionar</button>
+                    </div>
+
+                    <div class="payment-method" id="yape-payment">
+                        <div class="payment-icon">📱</div>
+                        <div class="payment-info">
+                            <h3>Yape</h3>
+                            <p>Paga rápido con Yape</p>
+                        </div>
+                        <button class="payment-btn">Seleccionar</button>
+                    </div>
+
+                    <div class="payment-method" id="plin-payment">
+                        <div class="payment-icon">💳</div>
+                        <div class="payment-info">
+                            <h3>Plin</h3>
+                            <p>Transferencia rápida con Plin</p>
+                        </div>
+                        <button class="payment-btn">Seleccionar</button>
+                    </div>
+
+                    <div class="payment-method" id="whatsapp-payment">
+                        <div class="payment-icon">💬</div>
+                        <div class="payment-info">
+                            <h3>Contactar por WhatsApp</h3>
+                            <p>Comunícate con nosotros para más opciones</p>
+                        </div>
+                        <button class="payment-btn">Contactar</button>
+                    </div>
+                </div>
+
+                <!-- Transfer Details Modal -->
+                <div id="transfer-details" class="payment-details" style="display: none;">
+                    <button class="back-btn" id="back-from-transfer">← Volver</button>
+                    <h3>Datos de Transferencia Bancaria</h3>
+                    <div class="bcp-logo-section">
+                        <img src="https://www.mercadonegro.pe/wp-content/uploads/2020/09/imagen-bcp.jpg" alt="BCP Logo" class="bcp-logo">
+                    </div>
+                    <div class="amount-section">
+                        <span class="amount-label">Monto a Pagar:</span>
+                        <span class="amount-value" id="transfer-amount">S/ 0.00</span>
+                    </div>
+                    <div class="details-container">
+                        <div class="detail-item">
+                            <span class="label">Banco:</span>
+                            <span class="value">Banco de Crédito del Perú (BCP)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Titular:</span>
+                            <span class="value">MaxStore Puno</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Número de Cuenta:</span>
+                            <span class="value">1234567890</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Código Interbancario:</span>
+                            <span class="value">002-189-000000123456-78</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Moneda:</span>
+                            <span class="value">Soles (S/)</span>
+                        </div>
+                    </div>
+                    <button id="whatsapp-transfer-btn" class="payment-btn" style="width: 100%; margin-top: 1rem;">Adjuntar Comprobante por WhatsApp</button>
+                </div>
+
+                <!-- Yape Details Modal -->
+                <div id="yape-details" class="payment-details" style="display: none;">
+                    <button class="back-btn" id="back-from-yape">← Volver</button>
+                    <h3>Pago por Yape</h3>
+                    <div class="amount-section">
+                        <span class="amount-label">Monto a Pagar:</span>
+                        <span class="amount-value" id="yape-amount">S/ 0.00</span>
+                    </div>
+                    <div class="details-container">
+                        <div class="detail-item">
+                            <span class="label">Número Yape:</span>
+                            <span class="value">+51 981839480</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">A nombre de:</span>
+                            <span class="value">MaxStore Puno</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Moneda:</span>
+                            <span class="value">Soles (S/)</span>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: var(--text-muted); margin: 1rem 0; font-size: 0.9rem;">Por favor, realiza la transferencia a través de Yape y luego envía tu comprobante.</p>
+                    <button id="whatsapp-yape-btn" class="payment-btn" style="width: 100%; margin-top: 1rem;">Adjuntar Comprobante por WhatsApp</button>
+                </div>
+
+                <!-- Plin Details Modal -->
+                <div id="plin-details" class="payment-details" style="display: none;">
+                    <button class="back-btn" id="back-from-plin">← Volver</button>
+                    <h3>Pago por Plin</h3>
+                    <div class="amount-section">
+                        <span class="amount-label">Monto a Pagar:</span>
+                        <span class="amount-value" id="plin-amount">S/ 0.00</span>
+                    </div>
+                    <div class="details-container">
+                        <div class="detail-item">
+                            <span class="label">Número Plin:</span>
+                            <span class="value">+51 981839480</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">A nombre de:</span>
+                            <span class="value">MaxStore Puno</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Moneda:</span>
+                            <span class="value">Soles (S/)</span>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: var(--text-muted); margin: 1rem 0; font-size: 0.9rem;">Por favor, realiza la transferencia a través de Plin y luego envía tu comprobante.</p>
+                    <button id="whatsapp-plin-btn" class="payment-btn" style="width: 100%; margin-top: 1rem;">Adjuntar Comprobante por WhatsApp</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel-overlay" class="overlay" style="display: none;">
+            <div class="admin-panel-content">
+                <div id="admin-login" class="admin-login" style="display: flex;">
+                    <h2>Panel de Administrador</h2>
+                    <div class="login-form">
+                        <input type="text" id="admin-username" placeholder="Usuario" class="admin-input">
+                        <input type="password" id="admin-password" placeholder="Contraseña" class="admin-input">
+                        <button id="admin-login-btn" class="admin-btn">Ingresar</button>
+                    </div>
+                </div>
+
+                <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+                    <div class="admin-header">
+                        <h2>Dashboard de Administración</h2>
+                        <button id="admin-logout-btn" class="admin-btn-logout">Cerrar Sesión</button>
+                    </div>
+
+                    <div class="admin-controls">
+                        <div class="admin-search-create">
+                            <input type="text" id="admin-search" placeholder="Buscar producto por nombre o ID...">
+                            <button id="admin-create-btn" class="admin-btn-create">+ Crear Producto</button>
+                        </div>
+                        <div id="admin-products-list" class="admin-products-list">
+                            <!-- Productos se cargarán aquí -->
+                        </div>
+                    </div>
+
+                    <div id="admin-product-editor" class="admin-product-editor" style="display: none;">
+                        <button id="admin-back-btn" class="admin-btn">← Volver</button>
+                        <h3>Editar Producto</h3>
+                        
+                        <form id="admin-edit-form" class="admin-edit-form">
+                            <div class="admin-form-group">
+                                <label>ID del Producto:</label>
+                                <input type="number" id="admin-product-id" disabled>
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Nombre del Producto:</label>
+                                <input type="text" id="admin-product-name" placeholder="Nombre">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Marca:</label>
+                                <input type="text" id="admin-product-brand" placeholder="Ej: Dell, HP, Lenovo">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Precio (S/):</label>
+                                <input type="number" id="admin-product-price" placeholder="Precio" step="0.01">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Imagen del Producto:</label>
+                                <div class="admin-image-upload">
+                                    <div class="image-input-group">
+                                        <label for="admin-product-image" class="file-input-label">📁 Seleccionar Imagen o Foto</label>
+                                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                                            Soporta: JPG, PNG, GIF, WebP, HEIC (se convierte automáticamente)
+                                        </p>
+                                        <input type="file" id="admin-product-image" accept="image/*" placeholder="Seleccionar imagen">
+                                    </div>
+                                    <button type="button" id="admin-camera-btn" class="admin-btn-camera">📷 Tomar Foto (Celular)</button>
+                                    <input type="text" id="admin-product-image-url" placeholder="O pega aquí una URL de imagen" class="admin-input">
+                                </div>
+                                <div id="admin-image-preview" class="admin-image-preview">
+                                    <p style="color: var(--text-muted);">Aquí aparecerá la vista previa de tu imagen</p>
+                                </div>
+                                <div id="admin-image-upload-status" class="upload-status"></div>
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Categoría:</label>
+                                <select id="admin-product-category">
+                                    <option value="Laptops">Laptops</option>
+                                    <option value="Tablets">Tablets</option>
+                                    <option value="Mini PCs">Mini PCs</option>
+                                    <option value="Cargadores">Cargadores</option>
+                                    <option value="Cables">Cables</option>
+                                    <option value="Audífonos">Audífonos</option>
+                                    <option value="Parlantes">Parlantes</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>CPU:</label>
+                                <input type="text" id="admin-product-cpu" placeholder="Ej: Intel i7">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>RAM:</label>
+                                <input type="text" id="admin-product-ram" placeholder="Ej: 16GB">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>GPU:</label>
+                                <input type="text" id="admin-product-gpu" placeholder="Ej: RTX 3060">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>SSD:</label>
+                                <input type="text" id="admin-product-ssd" placeholder="Ej: 512GB">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Pantalla:</label>
+                                <input type="text" id="admin-product-screen" placeholder="Ej: 15.6 pulgadas">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Cantidad Disponible (Stock):</label>
+                                <input type="number" id="admin-product-stock" placeholder="Ej: 50" min="0">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Descripción:</label>
+                                <textarea id="admin-product-description" placeholder="Descripción del producto" rows="3"></textarea>
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Calificación (0-5):</label>
+                                <input type="number" id="admin-product-rating" placeholder="Ej: 4.5" step="0.1" min="0" max="5">
+                            </div>
+
+                            <div class="admin-form-group">
+                                <label>Estado del Producto:</label>
+                                <select id="admin-product-condition">
+                                    <option value="Sellado">Sellado</option>
+                                    <option value="Open Box">Open Box</option>
+                                    <option value="Muy Bueno">Muy Bueno</option>
+                                    <option value="Bueno">Bueno</option>
+                                </select>
+                            </div>
+
+                            <div class="admin-form-buttons">
+                                <button type="button" id="admin-save-btn" class="admin-btn-save">Guardar Cambios</button>
+                                <button type="button" id="admin-delete-btn" class="admin-btn-delete">Eliminar Producto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

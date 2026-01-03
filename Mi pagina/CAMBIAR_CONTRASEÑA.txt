@@ -1,0 +1,122 @@
+🚀 INSTRUCCIONES RÁPIDAS - Cambiar Contraseña
+============================================
+
+## 5 MINUTOS PARA CAMBIAR TU CONTRASEÑA
+
+### Paso 1: Abre tu sitio web
+- En Google Chrome, Firefox, o tu navegador favorito
+- Abre el archivo `index.html`
+
+### Paso 2: Abre la Consola
+- Presiona **F12** en tu teclado (o Cmd+Option+I en Mac)
+- Se abre un panel en la parte inferior
+- Busca la pestaña **Console**
+
+### Paso 3: Copia el Código
+Copia EXACTAMENTE esto (sin los números):
+
+```javascript
+const newCreds = {
+    username: 'maxstore',
+    passwordHash: btoa('puno2025')
+};
+localStorage.setItem('maxstore_admin_creds', JSON.stringify(newCreds));
+console.log('✅ Credenciales guardadas');
+```
+
+### Paso 4: Pégalo en la Consola
+1. Haz clic en el area de la consola (donde dice >>)
+2. Pega el código (Ctrl+V o Cmd+V)
+3. Presiona **ENTER**
+
+### Paso 5: Verifica
+- Debería aparecer: `✅ Credenciales guardadas`
+- Recarga la página (F5)
+- Intenta loguearte con las credenciales
+
+---
+
+## CAMBIAR A TUS PROPIAS CREDENCIALES
+
+Si quieres un usuario y contraseña PERSONALIZADA:
+
+Reemplaza esto:
+```
+username: 'maxstore'  ← TU USUARIO AQUÍ
+password: 'puno2025'  ← TU CONTRASEÑA AQUÍ
+```
+
+Ejemplo: Cambiar a usuario: **admin2025**, contraseña: **MiClaveSegura123**
+
+```javascript
+const newCreds = {
+    username: 'admin2025',
+    passwordHash: btoa('MiClaveSegura123')
+};
+localStorage.setItem('maxstore_admin_creds', JSON.stringify(newCreds));
+console.log('✅ Credenciales guardadas');
+```
+
+Luego:
+1. Presiona ENTER en consola
+2. Recarga la página (F5)
+3. Usa tus nuevas credenciales para loguearte
+
+---
+
+## ⚠️ IMPORTANTE
+
+- **NO compartas** el código/contraseña con nadie
+- **NO dejes** la consola abierta si dejas el dispositivo
+- **ANOTA** tus nuevas credenciales en lugar seguro
+- **HAZ RESPALDO** de tus productos regularmente
+
+---
+
+## RESPALDAR TUS PRODUCTOS (MÁS IMPORTANTE)
+
+### En la Consola, ejecuta:
+```javascript
+const backup = localStorage.getItem('maxstore_products');
+console.log(backup);
+```
+
+Se mostrará un texto LARGO. 
+
+1. **Selecciónalo TODO**
+2. **Cópialo** (Ctrl+C)
+3. **Pégalo en un archivo .txt** en tu computadora
+4. **Guarda ese archivo** como respaldo
+
+### Si algo sale mal:
+```javascript
+// Pega tu respaldo aquí:
+localStorage.setItem('maxstore_products', 'PEGA_AQUI_TU_RESPALDO');
+location.reload();
+```
+
+---
+
+## 🆘 PREGUNTAS FRECUENTES
+
+**P: ¿Dónde está la contraseña guardada?**  
+R: En localStorage de tu navegador (encriptada en Base64)
+
+**P: ¿Puedo ver mi contraseña después?**  
+R: En la consola: `JSON.parse(localStorage.getItem('maxstore_admin_creds'));`
+
+**P: ¿Se pierden datos si cambio navegador?**  
+R: Sí, localStorage es por navegador. Haz respaldo.
+
+**P: ¿Puedo resetear a la contraseña original?**  
+R: Sí, ejecuta en consola: `localStorage.removeItem('maxstore_admin_creds');` y recarga
+
+**P: ¿Es seguro Base64?**  
+R: Es ofuscación, no encriptación. Para apps públicas usa mejor seguridad.
+
+**P: ¿Se ven mis productos en el código?**  
+R: No, están en localStorage. El código fuente solo tiene funciones.
+
+---
+
+**Necesitas ayuda?** Ver GUIA_ALMACENAMIENTO.txt para más detalles

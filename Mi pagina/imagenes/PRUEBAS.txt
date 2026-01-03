@@ -1,0 +1,166 @@
+📋 CHECKLIST DE PRUEBA - Sistema de Conversión de Imágenes
+=========================================================
+
+Usa esta lista para verificar que todo funciona correctamente.
+
+✅ PRUEBAS A REALIZAR:
+
+1. CARGA DE JPG
+   □ Abre panel admin (⚙️)
+   □ Crea/edita producto
+   □ Carga archivo JPG
+   □ Verifica que aparezca vista previa
+   □ Verifica mensaje: "Imagen convertida a JPG"
+   □ Verifica resolución: máx 600x600px
+   □ Verifica tamaño: típicamente 20-150KB
+   □ Guarda cambios
+   □ Confirma que se guardó
+
+2. CARGA DE PNG
+   □ Repite paso 1 pero con archivo PNG
+   □ Verifica que aparezca vista previa
+   □ Verifica mensaje: "Imagen convertida a PNG"
+   □ Verifica tamaño y resolución
+   □ Guarda cambios
+
+3. CARGA DE GIF
+   □ Carga archivo GIF
+   □ Verifica que se convierta a PNG
+   □ Verifica que aparezca vista previa correctamente
+   □ Guarda cambios
+
+4. CARGA DE HEIC (iPhone)
+   □ Carga archivo HEIC
+   □ Verifica que se convierta automáticamente a JPG
+   □ Verifica que aparezca vista previa
+   □ Verifica mensaje de conversión
+   □ Guarda cambios
+
+5. FOTO DESDE CÁMARA
+   □ Clic en "📷 Tomar Foto (Celular)"
+   □ Permite acceso a cámara
+   □ Toma una foto
+   □ Verifica que aparezca vista previa
+   □ Verifica información de conversión
+   □ Guarda cambios
+
+6. CARGA DESDE MÓVIL (iOS)
+   □ Abre en iPhone/iPad
+   □ Carga foto HEIC desde galería
+   □ Verifica conversión a JPG
+   □ Verifica que se redimensione
+   □ Guarda cambios
+
+7. CARGA DESDE MÓVIL (Android)
+   □ Abre en Android
+   □ Carga foto desde galería
+   □ Verifica conversión automática
+   □ Verifica que se redimensione
+   □ Guarda cambios
+
+8. IMAGEN GRANDE
+   □ Busca imagen 3000x3000px
+   □ Carga en el sistema
+   □ Verifica que se redimensione a 600x600
+   □ Verifica que peso sea <150KB
+   □ Guarda cambios
+
+9. IMAGEN PEQUEÑA
+   □ Busca imagen 100x100px
+   □ Carga en el sistema
+   □ Verifica que mantenga proporción
+   □ Verifica que peso sea mínimo
+   □ Guarda cambios
+
+10. URL DE IMAGEN
+    □ Obtén URL de imagen
+    □ Pégala en campo de texto
+    □ Verifica que aparezca vista previa
+    □ Guarda cambios
+
+11. VISTA PREVIA EN TIEMPO REAL
+    □ Carga imagen
+    □ Observa que aparezca preview instantáneamente
+    □ Verifica información de tamaño
+    □ Verifica información de resolución
+    □ Verifica información de formato
+
+12. MENSAJE DE ESTADO
+    □ Carga imagen JPG
+    □ Verifica mensaje verde: "✓ Imagen convertida..."
+    □ Carga imagen grande
+    □ Verifica que muestre "⏳ Procesando..."
+    □ Espera a que termine y muestre "✓"
+
+✨ CASOS ESPECIALES:
+
+13. MÚLTIPLES FORMATOS EN MISMO PRODUCTO
+    □ Crea producto con JPG
+    □ Edita y cambia a PNG
+    □ Verifica que ambas funcionen
+    □ Guarda cambios
+
+14. REDIMENSIONAMIENTO AUTOMÁTICO
+    □ Carga imagen 5000x3000
+    □ Verifica que final sea máx 600x600
+    □ Verifica que se mantenga proporción
+    □ Verifica que no esté pixelada
+
+15. COMPRESIÓN AUTOMÁTICA
+    □ Carga imagen "grande" (4MB)
+    □ Verifica que se comprima automáticamente
+    □ Verifica que peso final sea <150KB
+    □ Guarda cambios
+
+🔍 VALIDACIÓN FINAL:
+
+□ Todas las pruebas completadas
+□ Todas las vistas previas funcionan
+□ Todos los mensajes aparecen correctamente
+□ Las imágenes se guardan correctamente
+□ No hay errores en consola (F12 → Console)
+□ El almacenamiento no excede límites
+
+📊 INFORMACIÓN TÉCNICA:
+
+Abre Console (F12 → Console) y verifica:
+
+1. Sin errores rojos
+2. Mensaje de "Procesando imagen..." aparece
+3. Mensaje de éxito con formato final
+
+📈 RESULTADOS ESPERADOS:
+
+Formato entrada → Formato salida
+✓ JPG → JPG
+✓ PNG → PNG
+✓ GIF → PNG
+✓ WebP → PNG
+✓ HEIC → JPG
+✓ HEIF → JPG
+
+Resolución entrada → Resolución salida
+✓ 1000x1000 → 600x600
+✓ 2000x1500 → 600x450 (proporción)
+✓ 500x500 → 500x500 (menor que máx)
+✓ 100x100 → 100x100 (menor que máx)
+
+Tamaño entrada → Tamaño salida
+✓ 5MB → <150KB
+✓ 2MB → 50-120KB
+✓ 1MB → 30-80KB
+✓ 500KB → 20-60KB
+
+✅ COMPLETADO:
+
+Una vez pasadas todas las pruebas, tu sistema está listo para:
+  ✓ Aceptar cualquier formato de imagen
+  ✓ Convertir automáticamente
+  ✓ Redimensionar automáticamente
+  ✓ Comprimir automáticamente
+  ✓ Mostrar información en tiempo real
+  ✓ Guardar de forma optimizada
+
+═══════════════════════════════════════════════════════
+Fecha: 1 de enero de 2026
+Versión: 2.0 - Sistema de Conversión Automática

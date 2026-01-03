@@ -1,0 +1,56 @@
+# Ejemplos de Imágenes
+
+Esta carpeta contiene todas las imágenes de los productos agregados a través del panel de administración.
+
+## 📸 Cómo las Imágenes se Guardan
+
+Las imágenes se almacenan de dos formas:
+
+### 1. **Como Base64 en localStorage** (Automático)
+- Se convierte la imagen a formato base64
+- Se almacena en el navegador localmente
+- Disponible aunque no tengas conexión a internet
+
+### 2. **Archivo Físico** (Manual)
+- Puedes copiar manualmente imágenes a esta carpeta
+- Úsalas colocando el nombre del archivo en el campo de imagen del producto
+- Formato: `imagenes/nombre-archivo.jpg`
+
+## 🎨 Buenas Prácticas para Imágenes
+
+### Resolución Recomendada:
+- **Mínimo**: 400x400 px
+- **Ideal**: 600x600 px a 800x800 px
+- **Máximo**: 1200x1200 px (después comprime)
+
+### Tamaño de Archivo:
+- **JPG**: 50-200 KB
+- **PNG**: 100-300 KB
+- **WebP**: 30-150 KB
+
+### Aspecto Recomendado:
+- **Productos**: Cuadrado (1:1) es mejor
+- **Accesorios**: 3:2 o 4:3 funcionan bien
+- **Evita**: Imágenes muy pequeñas o de baja calidad
+
+## 📁 Estructura de Nombrado Sugerido
+
+```
+imagenes/
+├── laptop-asus-vivobook-001.jpg
+├── laptop-dell-inspiron-001.jpg
+├── accesorios-mouse-gamer-001.jpg
+├── accesorios-teclado-mecanico-001.jpg
+└── README.md
+```
+
+## 🔧 Herramientas Útiles para Optimizar Imágenes
+
+- **TinyPNG** (https://tinypng.com/) - Compresión sin pérdida
+- **ImageOptim** - Para Mac
+- **FileOptimizer** - Para Windows
+- **Squoosh** (https://squoosh.app/) - Herramienta en línea
+
+---
+
+**Nota**: Los archivos en esta carpeta se crearon el 1 de enero de 2026.
